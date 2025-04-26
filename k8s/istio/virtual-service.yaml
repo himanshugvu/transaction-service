@@ -5,8 +5,10 @@ metadata:
 spec:
   hosts:
     - "transaction.example.com"
+    - "transaction-service"  # Add the internal service name
   gateways:
     - transaction-gateway
+    - mesh  # Add the mesh gateway for internal traffic
   http:
     - match:
         - uri:
@@ -14,5 +16,6 @@ spec:
       route:
         - destination:
             host: transaction-service
+            subset: v1  # Specify the subset
             port:
               number: 80

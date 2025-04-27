@@ -1,0 +1,10 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Rollout
+metadata:
+  name: transaction-service
+spec:
+  template:
+    spec:
+      containers:
+        - name: transaction-service
+          image: himanshusuman/transaction-service:v2

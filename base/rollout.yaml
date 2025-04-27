@@ -1,11 +1,8 @@
-# transaction-rollout.yaml
 apiVersion: argoproj.io/v1alpha1
 kind: Rollout
 metadata:
   name: transaction-service
   namespace: transaction
-  labels:
-    app: transaction-service
 spec:
   replicas: 3
   revisionHistoryLimit: 3
@@ -16,6 +13,8 @@ spec:
     metadata:
       labels:
         app: transaction-service
+      annotations:
+        sidecar.istio.io/inject: "true"
     spec:
       containers:
         - name: transaction-service
@@ -54,10 +53,10 @@ spec:
               - primary
       steps:
         - setWeight: 20
-        - pause: {duration: 1m}  # Short duration for testing, increase for production
+        - pause: {duration: 30s}
         - setWeight: 40
-        - pause: {duration: 1m}
+        - pause: {duration: 30s}
         - setWeight: 60
-        - pause: {duration: 1m}
+        - pause: {duration: 30s}
         - setWeight: 80
-        - pause: {duration: 1m}
+        - pause: {duration: 30s}

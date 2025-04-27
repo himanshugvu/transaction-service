@@ -14,16 +14,18 @@ metadata:
     nginx.ingress.kubernetes.io/upstream-keepalive-timeout: "60"
     nginx.ingress.kubernetes.io/enable-cors: "true"
 spec:
+  ingressClassName: nginx
   rules:
-    - http:
-        paths:
-          - path: /api/transactions
-            pathType: Prefix
-            backend:
-              service:
-                name: transaction-service-stable
-                port:
-                  number: 80
+  - host: your-domain.com
+    http:
+      paths:
+      - path: /api/transactions
+        pathType: Prefix
+        backend:
+          service:
+            name: transaction-service-stable
+            port:
+              number: 80
 ---
 apiVersion: networking.k8s.io/v1
 kind: Ingress
@@ -43,13 +45,15 @@ metadata:
     nginx.ingress.kubernetes.io/upstream-keepalive-timeout: "60"
     nginx.ingress.kubernetes.io/enable-cors: "true"
 spec:
+  ingressClassName: nginx
   rules:
-    - http:
-        paths:
-          - path: /api/transactions
-            pathType: Prefix
-            backend:
-              service:
-                name: transaction-service-canary
-                port:
-                  number: 80
+  - host: your-domain.com
+    http:
+      paths:
+      - path: /api/transactions
+        pathType: Prefix
+        backend:
+          service:
+            name: transaction-service-canary
+            port:
+              number: 80

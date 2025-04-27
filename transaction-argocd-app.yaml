@@ -4,7 +4,7 @@ metadata:
   name: transaction-service
   namespace: transaction
 spec:
-  project: default
+  project: transaction
   source:
     repoURL: https://github.com/himanshugvu/transaction-service.git
     targetRevision: HEAD

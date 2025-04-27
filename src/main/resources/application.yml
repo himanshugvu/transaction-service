@@ -18,6 +18,10 @@ management:
     sampling:
       probability: 1.0
   endpoint:
+    prometheus:
+      enabled: true
+    metrics:
+      enabled: true
     health:
       show-details: always
 

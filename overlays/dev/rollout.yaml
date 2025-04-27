@@ -1,0 +1,62 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Rollout
+metadata:
+  name: transaction-service
+  namespace: transaction
+spec:
+  replicas: 3
+  revisionHistoryLimit: 3
+  selector:
+    matchLabels:
+      app: transaction-service
+  template:
+    metadata:
+      labels:
+        app: transaction-service
+      annotations:
+        sidecar.istio.io/inject: "true"
+    spec:
+      containers:
+        - name: transaction-service
+          image: himanshusuman/transaction-service:v2
+          ports:
+            - name: http
+              containerPort: 8080
+          resources:
+            requests:
+              memory: "512Mi"
+              cpu: "200m"
+            limits:
+              memory: "768Mi"
+              cpu: "500m"
+          readinessProbe:
+            httpGet:
+              path: /actuator/health
+              port: 8080
+            initialDelaySeconds: 30
+            periodSeconds: 10
+          livenessProbe:
+            httpGet:
+              path: /actuator/health
+              port: 8080
+            initialDelaySeconds: 60
+            periodSeconds: 15
+  strategy:
+    canary:
+      canaryService: transaction-service-canary
+      stableService: transaction-service-stable
+      trafficRouting:
+        istio:
+          virtualService:
+            name: transaction-service-vsvc
+            routes:
+              - primary
+      steps:
+        - setWeight: 20
+        - pause: {duration: 30s}
+        - setWeight: 40
+        - pause: {duration: 30s}
+        - setWeight: 60
+        - pause: {duration: 30s}
+        - setWeight: 80
+        - pause: {duration: 30s}

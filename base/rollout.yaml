@@ -15,25 +15,30 @@ spec:
         app: transaction-service
     spec:
       containers:
-        - name: transaction-service
-          image: himanshusuman/transaction-service:v7
-          ports:
-            - name: http
-              containerPort: 8080
-              protocol: TCP
-          resources:
-            requests:
-              memory: "512Mi"
-              cpu: "200m"
-            limits:
-              memory: "768Mi"
-              cpu: "500m"
-          livenessProbe:
-            httpGet:
-              path: /actuator/health
-              port: http
-            initialDelaySeconds: 60
-            periodSeconds: 15
+      - name: transaction-service
+        image: himanshusuman/transaction-service:v7
+        ports:
+        - name: http
+          containerPort: 8080
+        resources:
+          requests:
+            memory: "512Mi"
+            cpu: "200m"
+          limits:
+            memory: "768Mi"
+            cpu: "500m"
+        readinessProbe:
+          httpGet:
+            path: /health
+            port: 8080
+          initialDelaySeconds: 10
+          periodSeconds: 5
+        livenessProbe:
+          httpGet:
+            path: /health
+            port: 8080
+          initialDelaySeconds: 20
+          periodSeconds: 10
   strategy:
     canary:
       canaryService: transaction-service-canary
@@ -41,12 +46,13 @@ spec:
       trafficRouting:
         nginx:
           stableIngress: transaction-service-stable
+          canaryIngress: transaction-service-canary
       steps:
-        - setWeight: 20
-        - pause: {duration: 30s}
-        - setWeight: 40
-        - pause: {duration: 30s}
-        - setWeight: 60
-        - pause: {duration: 30s}
-        - setWeight: 80
-        - pause: {duration: 30s}
+      - setWeight: 20
+      - pause: {duration: 5m}
+      - setWeight: 40
+      - pause: {duration: 5m}
+      - setWeight: 60
+      - pause: {duration: 5m}
+      - setWeight: 80
+      - pause: {duration: 5m}

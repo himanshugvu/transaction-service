@@ -45,7 +45,6 @@ metadata:
     nginx.ingress.kubernetes.io/upstream-keepalive-timeout: "60"
     nginx.ingress.kubernetes.io/enable-cors: "true"
 spec:
-  ingressClassName: nginx
   rules:
   - host: localhost
     http:

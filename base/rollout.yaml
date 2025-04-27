@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
         - name: transaction-service
-          image: himanshusuman/transaction-service:v5
+          image: himanshusuman/transaction-service:v7
           ports:
             - name: http
               containerPort: 8080

@@ -3,9 +3,8 @@ kind: Application
 metadata:
   name: transaction-service
   namespace: transaction
-  finalizers:
-    - resources-finalizer.argocd.argoproj.io
 spec:
+  project: default
   source:
     repoURL: https://github.com/himanshugvu/transaction-service.git
     targetRevision: HEAD

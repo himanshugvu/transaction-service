@@ -8,9 +8,9 @@ spec:
     istio: ingressgateway
   servers:
     - port:
-        number: 8080  # Match the port you're using in Postman (8080)
+        number: 80
         name: http
         protocol: HTTP
       hosts:
         - "transaction.example.com"
-        - "localhost"  # Add localhost to the hosts list
+        - "localhost"

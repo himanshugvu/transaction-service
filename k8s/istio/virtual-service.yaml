@@ -2,20 +2,20 @@ apiVersion: networking.istio.io/v1alpha3
 kind: VirtualService
 metadata:
   name: transaction-service
+  namespace: transaction
 spec:
   hosts:
     - "transaction.example.com"
-    - "transaction-service"  # Add the internal service name
+    - "localhost"
   gateways:
     - transaction-gateway
-    - mesh  # Add the mesh gateway for internal traffic
+    - mesh
   http:
     - match:
         - uri:
-            prefix: /api/transactions
+            prefix: "/api/transactions"
       route:
         - destination:
             host: transaction-service
-            subset: v1  # Specify the subset
             port:
               number: 80

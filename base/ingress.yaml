@@ -9,7 +9,7 @@ spec:
   rules:
     - http:
         paths:
-          - path: /
+          - path: /api/transactions
             pathType: Prefix
             backend:
               service:
@@ -30,7 +30,7 @@ spec:
   rules:
     - http:
         paths:
-          - path: /
+          - path: /api/transactions
             pathType: Prefix
             backend:
               service:

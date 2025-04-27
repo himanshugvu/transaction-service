@@ -22,7 +22,7 @@ spec:
     spec:
       containers:
       - name: transaction-service
-        image: himanshusman/transaction-service:0.0.1-SNAPSHOT
+        image: himanshusuman/transaction-service:0.0.1-SNAPSHOT
         ports:
         - containerPort: 8080
         resources:

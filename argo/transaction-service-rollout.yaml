@@ -21,11 +21,24 @@ spec:
             - containerPort: 8080
           resources:
             requests:
-              memory: "256Mi"
-              cpu: "100m"
-            limits:
               memory: "512Mi"
+              cpu: "200m"
+            limits:
+              memory: "768Mi"
               cpu: "500m"
+          env:
+            - name: BPL_JVM_THREAD_COUNT
+              value: "100"
+            - name: BPL_JVM_THREAD_STACK_SIZE
+              value: "512K"
+            - name: JAVA_TOOL_OPTIONS
+              value: >-
+                -XX:ReservedCodeCacheSize=128M 
+                -XX:MaxMetaspaceSize=64M 
+                -XX:MaxDirectMemorySize=10M 
+                -XX:+UseContainerSupport 
+                -XX:MaxRAMPercentage=65.0
+                -Dspring.threads.virtual.enabled=true
           readinessProbe:
             httpGet:
               path: /health  # Adjust to your app's health endpoint

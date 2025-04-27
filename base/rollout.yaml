@@ -1,7 +1,7 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Rollout
 metadata:
-  name: transaction-service
+  name: transaction-service-rollout
   namespace: transaction
 spec:
   replicas: 5

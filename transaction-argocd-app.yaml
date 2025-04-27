@@ -2,9 +2,7 @@ apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
   name: transaction-service
-  namespace: argocd
 spec:
-  project: default
   source:
     repoURL: https://github.com/himanshugvu/transaction-service.git
     targetRevision: HEAD

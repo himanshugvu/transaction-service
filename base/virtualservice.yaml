@@ -2,21 +2,29 @@ apiVersion: networking.istio.io/v1alpha3
 kind: VirtualService
 metadata:
   name: transaction-service-vsvc
+  namespace: transaction
 spec:
   hosts:
-    - "*"
+  - "*"
   gateways:
-    - transaction-gateway
+  - transaction-gateway
   http:
-    - name: primary
-      route:
-        - destination:
-            host: transaction-service-stable
-            port:
-              number: 8080
-          weight: 100
-        - destination:
-            host: transaction-service-canary
-            port:
-              number: 8080
-          weight: 0
+  - name: primary
+    match:
+    - uri:
+        prefix: /
+    route:
+    - destination:
+        host: transaction-service-stable
+        port:
+          number: 8080
+      weight: 100
+    - destination:
+        host: transaction-service-canary
+        port:
+          number: 8080
+      weight: 0
+    timeout: 5s
+    retries:
+      attempts: 3
+      perTryTimeout: 2s

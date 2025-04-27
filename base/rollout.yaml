@@ -4,7 +4,7 @@ metadata:
   name: transaction-service
   namespace: transaction
 spec:
-  replicas: 5
+  replicas: 3
   revisionHistoryLimit: 3
   selector:
     matchLabels:

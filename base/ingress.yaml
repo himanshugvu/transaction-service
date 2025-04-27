@@ -5,6 +5,30 @@ metadata:
   namespace: transaction
   annotations:
     kubernetes.io/ingress.class: "nginx"
+    # Improved timeout settings to prevent 503 errors
+    nginx.ingress.kubernetes.io/proxy-connect-timeout: "30"
+    nginx.ingress.kubernetes.io/proxy-read-timeout: "1800"
+    nginx.ingress.kubernetes.io/proxy-send-timeout: "1800"
+
+    # Add retry logic for transient failures
+    nginx.ingress.kubernetes.io/proxy-next-upstream: "error timeout http_502 http_503 http_504"
+    nginx.ingress.kubernetes.io/proxy-next-upstream-tries: "3"
+
+    # Enable keepalive connections for better performance
+    nginx.ingress.kubernetes.io/upstream-keepalive-connections: "32"
+    nginx.ingress.kubernetes.io/upstream-keepalive-timeout: "60"
+
+    # Add CORS support if needed
+    nginx.ingress.kubernetes.io/enable-cors: "true"
+
+    # Optional: Configure rate limiting if needed
+    # nginx.ingress.kubernetes.io/limit-rps: "10"
+
+    # Optional: Add basic security headers
+    nginx.ingress.kubernetes.io/configuration-snippet: |
+      more_set_headers "X-Frame-Options: SAMEORIGIN";
+      more_set_headers "X-Content-Type-Options: nosniff";
+      more_set_headers "X-XSS-Protection: 1; mode=block";
 spec:
   rules:
     - http:
@@ -26,6 +50,22 @@ metadata:
     kubernetes.io/ingress.class: "nginx"
     nginx.ingress.kubernetes.io/canary: "true"
     nginx.ingress.kubernetes.io/canary-weight: "0"
+
+    # Mirror timeout settings from stable ingress
+    nginx.ingress.kubernetes.io/proxy-connect-timeout: "30"
+    nginx.ingress.kubernetes.io/proxy-read-timeout: "1800"
+    nginx.ingress.kubernetes.io/proxy-send-timeout: "1800"
+
+    # Add retry logic for transient failures
+    nginx.ingress.kubernetes.io/proxy-next-upstream: "error timeout http_502 http_503 http_504"
+    nginx.ingress.kubernetes.io/proxy-next-upstream-tries: "3"
+
+    # Enable keepalive connections for better performance
+    nginx.ingress.kubernetes.io/upstream-keepalive-connections: "32"
+    nginx.ingress.kubernetes.io/upstream-keepalive-timeout: "60"
+
+    # Add CORS support if needed
+    nginx.ingress.kubernetes.io/enable-cors: "true"
 spec:
   rules:
     - http:

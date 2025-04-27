@@ -3,5 +3,4 @@ kind: Kustomization
 resources:
   - rollout.yaml
   - services.yaml
-  - gateway.yaml
-  - virtualservice.yaml
+  - ingress.yaml

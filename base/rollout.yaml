@@ -28,12 +28,6 @@ spec:
             limits:
               memory: "768Mi"
               cpu: "500m"
-          readinessProbe:
-            httpGet:
-              path: /actuator/health
-              port: http
-            initialDelaySeconds: 30
-            periodSeconds: 10
           livenessProbe:
             httpGet:
               path: /actuator/health

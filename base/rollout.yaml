@@ -47,7 +47,6 @@ spec:
       trafficRouting:
         nginx:
           stableIngress: transaction-service-stable
-          canaryIngress: transaction-service-canary
       steps:
         - setWeight: 20
         - pause: {duration: 30s}

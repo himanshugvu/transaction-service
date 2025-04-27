@@ -1,8 +1,10 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Rollout
 metadata:
-  name: transaction-service-rollout
+  name: transaction-service
   namespace: transaction
+  labels:
+    app: transaction-service
 spec:
   replicas: 5
   selector:
@@ -31,7 +33,7 @@ spec:
       canaryService: transaction-service-canary
       stableService: transaction-service-stable
       trafficRouting:
-        nginx:
+        ingress:
           stableIngress: transaction-ingress
       steps:
         - setWeight: 20

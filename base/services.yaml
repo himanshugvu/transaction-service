@@ -3,14 +3,17 @@ kind: Service
 metadata:
   name: transaction-service-stable
   namespace: transaction
+  labels:
+    app: transaction-service
 spec:
   selector:
     app: transaction-service
     rollouts-pod-template-hash: # Managed by Argo Rollouts
   ports:
-  - name: http
-    port: 80
-    targetPort: 8080
+    - port: 80 # Service port
+      targetPort: http # Maps to the container port name (8080)
+      protocol: TCP
+      name: http
   type: ClusterIP
 ---
 apiVersion: v1
@@ -18,12 +21,15 @@ kind: Service
 metadata:
   name: transaction-service-canary
   namespace: transaction
+  labels:
+    app: transaction-service
 spec:
   selector:
     app: transaction-service
     rollouts-pod-template-hash: # Managed by Argo Rollouts
   ports:
-  - name: http
-    port: 80
-    targetPort: 8080
+    - port: 80 # Service port
+      targetPort: http # Maps to the container port name (8080)
+      protocol: TCP
+      name: http
   type: ClusterIP

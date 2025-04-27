@@ -3,9 +3,11 @@ kind: Rollout
 metadata:
   name: transaction-service
   namespace: transaction
+  labels:
+    app: transaction-service
 spec:
   replicas: 3
-  revisionHistoryLimit: 5
+  revisionHistoryLimit: 3
   selector:
     matchLabels:
       app: transaction-service

@@ -1,0 +1,11 @@
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  name: transaction-service
+spec:
+  selector:
+    matchLabels:
+      app: transaction-service
+  endpoints:
+    - port: http
+      path: /actuator/prometheus

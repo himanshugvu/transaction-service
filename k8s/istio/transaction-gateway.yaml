@@ -12,5 +12,4 @@ spec:
         name: http
         protocol: HTTP
       hosts:
-        - "transaction.example.com"
-        - "localhost"
+        - "*"

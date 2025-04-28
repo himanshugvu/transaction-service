@@ -9,7 +9,7 @@ spec:
   project: default
   source:
     repoURL: https://github.com/himanshugvu/transaction-service.git
-    targetRevision: HEAD
+    targetRevision: istio
     path: overlays/dev
   destination:
     server: https://kubernetes.default.svc

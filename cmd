@@ -14,3 +14,8 @@ kubectl port-forward $POD_NAME 8080:8080 -n transaction
 
 # In another terminal, test the connection
 curl http://localhost:8080/api/transactions
+
+kubectl port-forward svc/argocd-server -n argocd 8090:443
+argo dashboard
+
+kubectl port-forward -n istio-system svc/istio-ingressgateway 8080:80
